@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="110dp"
+	android:orientation="horizontal"
+	android:gravity="center_vertical"
+	android:padding="5dp">
+
+	<TextView
+		android:id="@+id/item_mymusic_postion"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="10dp"
+		android:text="1"
+		android:gravity="center"
+		android:textSize="18sp"/>
+
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_weight="1.0">
+
+		<TextView
+			android:id="@+id/item_mymusic_song"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="歌曲名"
+			android:textSize="20dp"/>
+
+		<TextView
+			android:id="@+id/item_mymusic_singer"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/item_mymusic_song"
+			android:text="歌手"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/item_mymusic_duration"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/item_mymusic_song"
+			android:layout_marginLeft="15dp"
+			android:layout_toRightOf="@+id/item_mymusic_singer"
+			android:text="时间"
+			android:textSize="15sp"/>
+
+	</RelativeLayout>
+
+</LinearLayout>
+

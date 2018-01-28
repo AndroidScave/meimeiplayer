@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:layout_height="60dp">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text="享受平凡音质"
+			android:gravity="left|center"
+			android:textSize="25sp"
+			android:textColor="#FFFFFF"
+			android:background="#4D4D4D"
+			android:padding="10dp"
+			android:id="@+id/titleText"/>
+
+	</LinearLayout>
+
+	<RelativeLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:layout_centerInParent="true">
+
+		<LinearLayout
+			android:layout_height="80dp"
+			android:layout_width="80dp"
+			android:orientation="vertical"
+			android:layout_centerHorizontal="true"
+			android:background="@drawable/music"
+			android:layout_margin="20dp"/>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_height="100dp"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:layout_alignParentBottom="true">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="0:00"
+				android:layout_marginLeft="2dp"
+				android:id="@+id/startTime"/>
+
+			<SeekBar
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_weight="1.0"
+				android:id="@+id/seek"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="0:00"
+				android:layout_marginRight="2dp"
+				android:id="@+id/endTime"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:gravity="center_vertical">
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="列表"
+				android:layout_weight="1.0"
+				android:id="@+id/songList"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="&lt;&lt;"
+				android:layout_weight="1.0"
+				android:id="@+id/last"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="■"
+				android:layout_weight="1.0"
+				android:id="@+id/stop"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="&gt;&gt;"
+				android:layout_weight="1.0"
+				android:id="@+id/next"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="菜单"
+				android:layout_weight="1.0"
+				android:id="@+id/menu"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</RelativeLayout>
+
