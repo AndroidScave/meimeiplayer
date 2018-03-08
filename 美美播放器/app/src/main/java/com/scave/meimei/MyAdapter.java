@@ -50,6 +50,7 @@ public class MyAdapter extends BaseAdapter {
 		//设置控件属性
 		holder.song.setText(list.get(i).get("song").toString()); 
 		holder.singer.setText(list.get(i).get("singer").toString()); 
+		
 		//转换时长
 		Object duration = list.get(i).get("duration"); 
 		String time = PlayMusic.formatTime((int)duration); 

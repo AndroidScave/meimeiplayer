@@ -1,40 +1,40 @@
 package com.scave.meimei;
 
-import android.widget.*;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import android.app.Dialog;
-import android.content.DialogInterface;
 
 public class MainActivity extends Activity 
 {
+	private PageLayout page;
 	private TextView titleText;
+	private TextView author;
 	private TextView startTime;
+	private ImageView home;
+	private ImageView list;
 	private SeekBar seek;
 	private TextView endTime;
-	private Button songList;
-	private Button last;
-	private Button stop;
-	private Button next;
-	private Button menu;
+	private ImageView last;
+	private ImageView stop;
+	private ImageView next;
 	private MyAdapter adapter;
 	private ListView mListView;
-	private View view;
-	private AlertDialog.Builder builder;
-	private AlertDialog dialog;
 	int index=-1;
 	
     @Override
@@ -43,31 +43,19 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		
-		view=(LinearLayout) getLayoutInflater().inflate(R.layout.dialog_list,null);	
 		initView();
-		//歌曲列表对话框
-		builder =new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle("歌曲列表");
-		builder.setView(view);          
-		builder.create();
-		dialog = builder.create();
-		
+		page.setTouchScale(dip2px(150));
 		adapter = new MyAdapter(this,getMusicData());
 		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(new OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4)
 				{
+					
 					play(p3);
 					index = p3;
 				}
 			});
-			
-		songList.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View p1){
-					dialog.show();
-			}});
 			
 		seek.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
 				int progress;
@@ -102,6 +90,7 @@ public class MainActivity extends Activity
 		last.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View p1) {
+					if(index!=-1){
 					index--;
 					if(index<0){
 					index = mListView.getCount()-1;
@@ -110,16 +99,19 @@ public class MainActivity extends Activity
 						play(index);
 					}
 				}
+				}
 			});
 		next.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View p1) {
+					if(index!=-1){
 					index++;
 					if(index<mListView.getCount()-1){
 						play(index);
 					}else{
 						index=0;
 						play(index);
+					}
 					}
 				}
 			});
@@ -129,46 +121,58 @@ public class MainActivity extends Activity
 					if(index>=0){
 					if(PlayMusic.mediaPlayer.isPlaying()==true){
 						PlayMusic.pause();
-						stop.setText("▲");
+						stop.setImageResource(R.drawable.player_play);
 					}else{
 						PlayMusic.play();
-						stop.setText("■");
+						stop.setImageResource(R.drawable.player_pause);
 					}
 					}
 				}
 			});
-		menu.setOnClickListener(new OnClickListener(){
+			
+		home.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View p1) {
-					AlertDialog.Builder d = new AlertDialog.Builder(MainActivity.this);
-					d.setItems(new String[]{"关于","退出"}, new DialogInterface.OnClickListener(){
-							@Override
-							public void onClick(DialogInterface p1, int p2){
-								switch(p2){
-									case 0:
-										toast("Scave制作！无版权！");
-										break;
-									case 1:
-										finish();
-										break;
-								}
-							}
-					});
-					d.show();
+					page.showPage(0);
+					list.setColorFilter(0xffc0c0c0);
+					home.setColorFilter(0xfffffffff);
+				}
+			});
+		list.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View p1) {
+					page.showPage(1);
+					home.setColorFilter(0xffc0c0c0);
+					list.setColorFilter(0xfffffffff);
+				}
+			});
+		page.setOnPageChangeListener(new PageLayout.OnPageChangeListener(){
+				@Override
+				public void onPageChange(View v, int idx){
+					if(idx==0){
+						list.setColorFilter(0xffc0c0c0);
+						home.setColorFilter(0xfffffffff);
+					}else{
+						home.setColorFilter(0xffc0c0c0);
+						list.setColorFilter(0xfffffffff);
+					}
 				}
 			});
     }
 	private void initView(){
+		page = (PageLayout) findViewById(R.id.page);
+		home = (ImageView) findViewById(R.id.home);
+		list = (ImageView) findViewById(R.id.list);
 		titleText = (TextView) findViewById(R.id.titleText);
+		author = (TextView) findViewById(R.id.author);
 		startTime = (TextView) findViewById(R.id.startTime);
 		seek = (SeekBar) findViewById(R.id.seek);
 		endTime = (TextView) findViewById(R.id.endTime);
-		songList = (Button) findViewById(R.id.songList);
-		last = (Button) findViewById(R.id.last);
-		stop = (Button) findViewById(R.id.stop);
-		next = (Button) findViewById(R.id.next);
-		menu = (Button) findViewById(R.id.menu);
-		mListView = (ListView) view.findViewById(R.id.listListView1);
+		last = (ImageView) findViewById(R.id.last);
+		stop = (ImageView) findViewById(R.id.play);
+		next = (ImageView) findViewById(R.id.next);
+		mListView = (ListView) findViewById(R.id.listListView1);
+		list.setColorFilter(0xffc0c0c0);
 	}
 	
 	private List<Map<String, Object>> getMusicData(){
@@ -211,12 +215,18 @@ public class MainActivity extends Activity
 		Map<String, String> map = (HashMap<String, String>) mListView.getItemAtPosition(index);
 		String path = map.get("path");
 		String song = map.get("song");
+		String singer = map.get("singer");
 		index = index-1;
 		titleText.setText(song.replace(".mp3","").replace(".flac",""));
+		author.setText(singer);
 		PlayMusic.startPlay(MainActivity.this,path,seek,startTime,endTime);
-		dialog.dismiss();
+		stop.setImageResource(R.drawable.player_pause);
 	}
 	private void toast(CharSequence msg){
 		Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
 	}
+	private int dip2px(float f) {
+        return (int) ((getResources().getDisplayMetrics().density * f) + 0.5f);
+    }
+	
 }

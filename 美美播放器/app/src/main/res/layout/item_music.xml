@@ -14,12 +14,13 @@
 		android:layout_margin="10dp"
 		android:text="1"
 		android:gravity="center"
-		android:textSize="18sp"/>
+		android:textSize="18sp"
+		android:textColor="#FFFFFF"/>
 
 	<RelativeLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="20dp"
+		android:layout_marginLeft="14dp"
 		android:layout_weight="1.0">
 
 		<TextView
@@ -27,7 +28,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="歌曲名"
-			android:textSize="20dp"/>
+			android:textSize="20dp"
+			android:textColor="#FFFFFF"/>
 
 		<TextView
 			android:id="@+id/item_mymusic_singer"
@@ -35,7 +37,8 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/item_mymusic_song"
 			android:text="歌手"
-			android:textSize="15sp"/>
+			android:textSize="15sp"
+			android:textColor="#EDEDED"/>
 
 		<TextView
 			android:id="@+id/item_mymusic_duration"
@@ -45,7 +48,8 @@
 			android:layout_marginLeft="15dp"
 			android:layout_toRightOf="@+id/item_mymusic_singer"
 			android:text="时间"
-			android:textSize="15sp"/>
+			android:textSize="15sp"
+			android:textColor="#EDEDED"/>
 
 	</RelativeLayout>
 
